@@ -1,0 +1,146 @@
+﻿@*
+@model IEnumerable<BookTask.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Book List</h1>
+
+<!-- Search Form -->
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by Title or Author"
+               value="@Context.Request.Query["searchTerm"]" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PublishedYear)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedYear)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@
+@model IEnumerable<BookTask.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Book List</h1>
+
+<!-- Search Form -->
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by Title or Author"
+               value="@Context.Request.Query["searchTerm"]" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSortParam" asp-route-searchTerm="@Context.Request.Query["searchTerm"]">
+                    Title @if (ViewBag.CurrentSort == "title_desc")
+                    {
+                        <span>&#9660;</span>
+                    }
+                    else
+                    {
+                        <span>&#9650;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.YearSortParam" asp-route-searchTerm="@Context.Request.Query["searchTerm"]">
+                    Published Year @if (ViewBag.CurrentSort == "year_desc")
+                    {
+                        <span>&#9660;</span>
+                    }
+                    else
+                    {
+                        <span>&#9650;</span>
+                    }
+                </a>
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Author)</td>
+                <td>@Html.DisplayFor(modelItem => item.Genre)</td>
+                <td>@Html.DisplayFor(modelItem => item.PublishedYear)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
